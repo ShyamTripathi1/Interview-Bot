@@ -255,12 +255,12 @@ export default function QuizAssessment() {
                         ? 'rgba(99, 102, 241, 0.12)' 
                         : 'rgba(255, 255, 255, 0.02)',
                       border: isSelected
-                        ? '1px solid rgba(99, 102, 241, 0.45)'
+                        ? '2px solid rgba(99, 102, 241, 0.45)'
                         : '1px solid var(--glass-border)',
-                      color: isSelected ? 'white' : 'var(--text-primary)',
+                      color: 'var(--text-primary)',
                       cursor: 'pointer',
                       fontSize: '15px',
-                      fontWeight: isSelected ? '600' : '400',
+                      fontWeight: isSelected ? '800' : '500',
                       transition: 'var(--transition-fast)',
                       display: 'flex',
                       alignItems: 'center'

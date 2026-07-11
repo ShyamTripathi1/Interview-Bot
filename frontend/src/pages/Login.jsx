@@ -369,6 +369,7 @@ export default function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [seconds, setSeconds] = useState(252);
+  const [users, setUsers] = useState([]);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -376,6 +377,44 @@ export default function Login() {
     const timer = setInterval(() => setSeconds(s => s + 1), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/users');
+        const data = await response.json();
+        if (data.success) {
+          setUsers(data.users);
+        }
+      } catch (err) {
+        console.error('Failed to fetch users:', err);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  const handleQuickLogin = async (selectedEmail) => {
+    setError('');
+    setLoading(true);
+    try {
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/login-as', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: selectedEmail })
+      });
+      const data = await response.json();
+      if (data.success) {
+        login(data.token, data.user);
+        navigate('/dashboard');
+      } else {
+        setError(data.message || 'Quick login failed');
+      }
+    } catch (err) {
+      setError('Failed to connect to the server. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const formatClock = (s) => {
     const m = String(Math.floor(s / 60)).padStart(2, '0');
@@ -538,6 +577,49 @@ export default function Login() {
             <div className="login-card-foot">
               Don't have an account? <Link to="/register">Sign up</Link>
             </div>
+
+            {users.length > 0 && (
+              <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--line)' }}>
+                <h3 style={{ fontSize: '13px', fontWeight: '700', color: 'var(--ink-dim)', marginBottom: '12px', textAlign: 'center' }}>
+                  Quick Sign-In (Registered Accounts)
+                </h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '180px', overflowY: 'auto', paddingRight: '4px' }}>
+                  {users.map(u => (
+                    <button
+                      key={u.email}
+                      type="button"
+                      onClick={() => handleQuickLogin(u.email)}
+                      disabled={loading}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        padding: '10px 14px',
+                        background: 'rgba(232, 106, 23, 0.05)',
+                        border: '1px solid rgba(232, 106, 23, 0.15)',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'all 0.2s',
+                        width: '100%',
+                        fontFamily: 'inherit'
+                      }}
+                      onMouseEnter={e => {
+                        e.currentTarget.style.background = 'rgba(232, 106, 23, 0.1)';
+                        e.currentTarget.style.borderColor = 'rgba(232, 106, 23, 0.3)';
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.background = 'rgba(232, 106, 23, 0.05)';
+                        e.currentTarget.style.borderColor = 'rgba(232, 106, 23, 0.15)';
+                      }}
+                    >
+                      <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--ink)' }}>{u.name}</span>
+                      <span style={{ fontSize: '11px', color: 'var(--ink-faint)', marginTop: '2px' }}>{u.email}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

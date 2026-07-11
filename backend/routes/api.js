@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { register, login, getMe, protect } = require('../controllers/authController');
+const { register, login, getMe, protect, getUsers, loginAs } = require('../controllers/authController');
 const { startInterview, submitInterviewAnswers, getInterviews, getInterview } = require('../controllers/interviewController');
 const { startQuiz, submitQuiz, getQuizzes } = require('../controllers/quizController');
 const { getResume, updateResume, enhanceSection } = require('../controllers/resumeController');
@@ -11,6 +11,8 @@ const { sendMessage } = require('../controllers/chatController');
 router.post('/auth/register', register);
 router.post('/auth/login', login);
 router.get('/auth/me', protect, getMe);
+router.get('/auth/users', getUsers);
+router.post('/auth/login-as', loginAs);
 
 // Interview routes
 router.post('/interviews/start', protect, startInterview);

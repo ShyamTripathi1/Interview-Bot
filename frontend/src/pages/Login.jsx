@@ -580,44 +580,34 @@ export default function Login() {
 
             {users.length > 0 && (
               <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--line)' }}>
-                <h3 style={{ fontSize: '13px', fontWeight: '700', color: 'var(--ink-dim)', marginBottom: '12px', textAlign: 'center' }}>
-                  Quick Sign-In (Registered Accounts)
-                </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '180px', overflowY: 'auto', paddingRight: '4px' }}>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: 'var(--ink-dim)', marginBottom: '8px', textAlign: 'center' }}>
+                  Quick Sign-In (Select Account)
+                </label>
+                <select 
+                  onChange={(e) => { if (e.target.value) handleQuickLogin(e.target.value); }}
+                  defaultValue=""
+                  disabled={loading}
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    background: '#FFF9F4',
+                    border: '1px solid rgba(232, 106, 23, 0.25)',
+                    borderRadius: '8px',
+                    color: 'var(--ink)',
+                    fontSize: '13px',
+                    fontWeight: '600',
+                    fontFamily: 'inherit',
+                    cursor: 'pointer',
+                    outline: 'none'
+                  }}
+                >
+                  <option value="" disabled>Choose an account to sign in...</option>
                   {users.map(u => (
-                    <button
-                      key={u.email}
-                      type="button"
-                      onClick={() => handleQuickLogin(u.email)}
-                      disabled={loading}
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'flex-start',
-                        padding: '10px 14px',
-                        background: 'rgba(232, 106, 23, 0.05)',
-                        border: '1px solid rgba(232, 106, 23, 0.15)',
-                        borderRadius: '8px',
-                        cursor: 'pointer',
-                        textAlign: 'left',
-                        transition: 'all 0.2s',
-                        width: '100%',
-                        fontFamily: 'inherit'
-                      }}
-                      onMouseEnter={e => {
-                        e.currentTarget.style.background = 'rgba(232, 106, 23, 0.1)';
-                        e.currentTarget.style.borderColor = 'rgba(232, 106, 23, 0.3)';
-                      }}
-                      onMouseLeave={e => {
-                        e.currentTarget.style.background = 'rgba(232, 106, 23, 0.05)';
-                        e.currentTarget.style.borderColor = 'rgba(232, 106, 23, 0.15)';
-                      }}
-                    >
-                      <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--ink)' }}>{u.name}</span>
-                      <span style={{ fontSize: '11px', color: 'var(--ink-faint)', marginTop: '2px' }}>{u.email}</span>
-                    </button>
+                    <option key={u.email} value={u.email}>
+                      {u.name} ({u.email})
+                    </option>
                   ))}
-                </div>
+                </select>
               </div>
             )}
           </div>

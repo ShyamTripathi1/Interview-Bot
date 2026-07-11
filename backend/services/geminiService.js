@@ -366,7 +366,7 @@ The violations array must contain one entry per detected issue per snapshot.`;
   },
 
   generateQuiz: async (topic) => {
-    const prompt = `Create a multiple-choice quiz about "${topic}" consisting of exactly 10 questions.
+    const prompt = `Create a multiple-choice quiz about "${topic}" consisting of exactly 30 questions.
     For each question, provide 4 options, the 0-based index of the correct option, and a helpful explanation.
     
     Output MUST be a valid JSON array of objects matching this schema:

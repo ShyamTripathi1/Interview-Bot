@@ -347,7 +347,7 @@ export default function QuizAssessment() {
                   paddingLeft: '14px',
                   lineHeight: '1.6'
                 }}>
-                  {results.aiRecommendations}
+                  {results.aiRecommendations?.replace(/\*/g, '')}
                 </div>
               </div>
               <div style={{ textAlign: 'center', flexShrink: 0, margin: '0 auto' }}>
@@ -357,9 +357,19 @@ export default function QuizAssessment() {
                     position: 'absolute', inset: 0,
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'
                   }}>
-                    <span style={{ fontSize: '28px', fontWeight: '900', color: '#ef4444', lineHeight: 1 }}>
-                      {results.score}%
-                    </span>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <span style={{ 
+                        fontSize: '32px', 
+                        fontWeight: '900', 
+                        color: results.score >= 70 ? 'var(--accent-emerald)' : results.score >= 50 ? 'var(--accent-amber)' : 'var(--accent-rose)',
+                        lineHeight: 1 
+                      }}>
+                        {Math.round((results.score / 100) * results.questions.length)}
+                      </span>
+                      <span style={{ fontSize: '14px', fontWeight: '800', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                        / {results.questions.length}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <span style={{ color: 'var(--text-secondary)', fontSize: '13px', fontWeight: '600' }}>Overall Score</span>

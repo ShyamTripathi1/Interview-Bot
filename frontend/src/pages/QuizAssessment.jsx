@@ -332,7 +332,7 @@ export default function QuizAssessment() {
       {phase === 'results' && results && (
         <div style={{ maxWidth: '800px' }}>
           {/* Summary Score Card */}
-          <div className="card" style={{ marginBottom: '32px', background: 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.08))' }}>
+          <div className="card" style={{ marginBottom: '32px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '32px' }}>
               <div style={{ flex: '1 1 300px' }}>
                 <span className="badge badge-indigo" style={{ marginBottom: '10px' }}>
@@ -357,7 +357,7 @@ export default function QuizAssessment() {
                     position: 'absolute', inset: 0,
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'
                   }}>
-                    <span style={{ fontSize: '28px', fontWeight: '900', color: 'white', lineHeight: 1 }}>
+                    <span style={{ fontSize: '28px', fontWeight: '900', color: '#ef4444', lineHeight: 1 }}>
                       {results.score}%
                     </span>
                   </div>

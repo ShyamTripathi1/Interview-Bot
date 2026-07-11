@@ -201,7 +201,7 @@ export default function QuizAssessment() {
             </div>
 
             <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginBottom: '20px', lineHeight: '1.6' }}>
-              Our AI coach will generate an interactive 5-question custom quiz to test your concept limits.
+              Our AI coach will generate an interactive 30+-question custom quiz to test your concept limits.
             </p>
 
             <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>

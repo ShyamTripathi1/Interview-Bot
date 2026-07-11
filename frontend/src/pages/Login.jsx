@@ -581,11 +581,11 @@ export default function Login() {
             {users.length > 0 && (
               <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--line)' }}>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: 'var(--ink-dim)', marginBottom: '8px', textAlign: 'center' }}>
-                  Quick Sign-In (Select Account)
+                  Quick Email Fill (Select Account)
                 </label>
                 <select 
-                  onChange={(e) => { if (e.target.value) handleQuickLogin(e.target.value); }}
-                  defaultValue=""
+                  onChange={(e) => { if (e.target.value) setEmail(e.target.value); }}
+                  value={users.some(u => u.email === email) ? email : ""}
                   disabled={loading}
                   style={{
                     width: '100%',
@@ -601,7 +601,7 @@ export default function Login() {
                     outline: 'none'
                   }}
                 >
-                  <option value="" disabled>Choose an account to sign in...</option>
+                  <option value="" disabled>Choose an account to autofill email...</option>
                   {users.map(u => (
                     <option key={u.email} value={u.email}>
                       {u.name} ({u.email})

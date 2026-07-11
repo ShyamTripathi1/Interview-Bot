@@ -79,26 +79,6 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-// Login as a user directly without password (for debugging / quick login)
-exports.loginAs = async (req, res) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found' });
-    }
-
-    const token = signToken(user._id);
-    res.status(200).json({
-      success: true,
-      token,
-      user: { id: user._id, name: user.name, email: user.email }
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
-
 // Protect middleware helper
 exports.protect = async (req, res, next) => {
   let token;

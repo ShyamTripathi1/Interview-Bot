@@ -379,7 +379,7 @@ export default function QuizAssessment() {
                   borderColor: isCorrect ? 'rgba(16, 185, 129, 0.2)' : 'rgba(244, 63, 94, 0.2)' 
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '18px' }}>
-                    <h4 style={{ fontSize: '16px', color: 'var(--text-primary)', display: 'flex', gap: '10px', lineHeight: '1.5' }}>
+                    <h4 style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--text-primary)', display: 'flex', gap: '10px', lineHeight: '1.5' }}>
                       <span style={{
                         width: '24px', height: '24px', borderRadius: '50%',
                         background: isCorrect ? 'rgba(16,185,129,0.12)' : 'rgba(244,63,94,0.12)',
@@ -397,17 +397,17 @@ export default function QuizAssessment() {
                       const wasSelected = q.userAnswerIndex === optIdx;
                       const isCorrectOpt = q.correctOptionIndex === optIdx;
                       let optionBg = 'rgba(255, 255, 255, 0.01)';
-                      let optionBorder = 'rgba(255, 255, 255, 0.03)';
-                      let textColor = 'var(--text-secondary)';
+                      let optionBorder = 'rgba(200, 200, 200, 0.3)';
+                      let textColor = 'var(--text-primary)';
 
                       if (isCorrectOpt) {
-                        optionBg = 'rgba(16, 185, 129, 0.06)';
-                        optionBorder = 'rgba(16, 185, 129, 0.16)';
-                        textColor = '#a7f3d0';
+                        optionBg = 'rgba(16, 185, 129, 0.1)';
+                        optionBorder = 'rgba(16, 185, 129, 0.6)';
+                        textColor = '#047857';
                       } else if (wasSelected && !isCorrectOpt) {
-                        optionBg = 'rgba(244, 63, 94, 0.06)';
-                        optionBorder = 'rgba(244, 63, 94, 0.16)';
-                        textColor = '#fda4af';
+                        optionBg = 'rgba(244, 63, 94, 0.1)';
+                        optionBorder = 'rgba(244, 63, 94, 0.6)';
+                        textColor = '#be123c';
                       }
 
                       return (
@@ -415,9 +415,10 @@ export default function QuizAssessment() {
                           padding: '12px 16px',
                           borderRadius: '10px',
                           background: optionBg,
-                          border: `1px solid ${optionBorder}`,
+                          border: `2px solid ${optionBorder}`,
                           color: textColor,
                           fontSize: '14px',
+                          fontWeight: 'bold',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'space-between'

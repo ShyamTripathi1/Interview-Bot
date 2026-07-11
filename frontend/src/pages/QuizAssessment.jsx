@@ -235,7 +235,7 @@ export default function QuizAssessment() {
           </div>
 
           <div className="card">
-            <h2 style={{ fontSize: '20px', marginBottom: '24px', color: 'white', lineHeight: '1.5' }}>
+            <h2 style={{ fontSize: '20px', marginBottom: '24px', color: 'var(--text-primary)', lineHeight: '1.5' }}>
               {questions[currentIdx].questionText}
             </h2>
 
@@ -323,7 +323,7 @@ export default function QuizAssessment() {
       {phase === 'grading' && (
         <div className="card" style={{ textAlign: 'center', padding: '60px 40px', maxWidth: '780px' }}>
           <div className="spinner" style={{ margin: '0 auto 24px auto' }}></div>
-          <h2 style={{ fontSize: '24px', marginBottom: '8px', color: 'white' }}>Grading Quiz</h2>
+          <h2 style={{ fontSize: '24px', marginBottom: '8px', color: 'var(--text-primary)' }}>Grading Quiz</h2>
           <p style={{ color: 'var(--text-secondary)' }}>Validating answers and fetching review recommendations...</p>
         </div>
       )}
@@ -338,7 +338,7 @@ export default function QuizAssessment() {
                 <span className="badge badge-indigo" style={{ marginBottom: '10px' }}>
                   <Award size={10} /> Quiz Score Card
                 </span>
-                <h2 style={{ fontSize: '28px', color: 'white', marginBottom: '14px' }}>Topic: {results.topic}</h2>
+                <h2 style={{ fontSize: '28px', color: 'var(--text-primary)', marginBottom: '14px' }}>Topic: {results.topic}</h2>
                 <div style={{ 
                   color: 'var(--text-secondary)', 
                   fontSize: '14px', 
@@ -379,7 +379,7 @@ export default function QuizAssessment() {
                   borderColor: isCorrect ? 'rgba(16, 185, 129, 0.2)' : 'rgba(244, 63, 94, 0.2)' 
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '18px' }}>
-                    <h4 style={{ fontSize: '16px', color: 'white', display: 'flex', gap: '10px', lineHeight: '1.5' }}>
+                    <h4 style={{ fontSize: '16px', color: 'var(--text-primary)', display: 'flex', gap: '10px', lineHeight: '1.5' }}>
                       <span style={{
                         width: '24px', height: '24px', borderRadius: '50%',
                         background: isCorrect ? 'rgba(16,185,129,0.12)' : 'rgba(244,63,94,0.12)',

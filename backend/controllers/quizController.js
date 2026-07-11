@@ -15,10 +15,10 @@ exports.startQuiz = async (req, res) => {
       user: req.user.id,
       topic,
       questions: generatedQuestions.map(q => ({
-        questionText: q.questionText,
-        options: q.options,
-        correctOptionIndex: q.correctOptionIndex,
-        explanation: q.explanation,
+        questionText: q.questionText || q.question || q.title || "Question generation failed",
+        options: q.options || [],
+        correctOptionIndex: q.correctOptionIndex !== undefined ? q.correctOptionIndex : 0,
+        explanation: q.explanation || "No explanation provided.",
         userAnswerIndex: -1
       })),
       status: 'pending'

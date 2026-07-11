@@ -154,14 +154,25 @@ function cleanJSON(text) {
  */
 const geminiService = {
   generateInterviewQuestions: async (role, jobDescription = "") => {
+    const prompt = `You are an expert interviewer. Generate a list of exactly 5 relevant, challenging interview questions for the role of a "${role}". ${jobDescription ? `Take this job description into consideration: ${jobDescription}.` : ''} 
+    Return the output as a valid JSON array of strings ONLY. Do not include markdown code block syntax or any prefix text. Format example: ["question 1", "question 2", ...]`;
+
+    // Try Groq first for extreme speed
+    if (process.env.GROQ_API_KEY && process.env.GROQ_API_KEY.trim() !== "") {
+      try {
+        const messages = [{ role: "user", content: prompt }];
+        const resText = await callGroq(messages, "llama-3.3-70b-versatile");
+        if (resText) return cleanJSON(resText);
+      } catch (err) {
+        console.error("Groq generateInterviewQuestions error:", err.message);
+      }
+    }
+
     if (!genAI) {
       return getFallbackInterviewQuestions(role);
     }
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
-      const prompt = `You are an expert interviewer. Generate a list of exactly 5 relevant, challenging interview questions for the role of a "${role}". ${jobDescription ? `Take this job description into consideration: ${jobDescription}.` : ''} 
-      Return the output as a valid JSON array of strings ONLY. Do not include markdown code block syntax or any prefix text. Format example: ["question 1", "question 2", ...]`;
-      
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const text = response.text();
@@ -355,25 +366,36 @@ The violations array must contain one entry per detected issue per snapshot.`;
   },
 
   generateQuiz: async (topic) => {
+    const prompt = `Create a multiple-choice quiz about "${topic}" consisting of exactly 5 questions.
+    For each question, provide 4 options, the 0-based index of the correct option, and a helpful explanation.
+    
+    Output MUST be a valid JSON array of objects matching this schema:
+    [
+      {
+        "questionText": "Question text here?",
+        "options": ["Option 0", "Option 1", "Option 2", "Option 3"],
+        "correctOptionIndex": 1,
+        "explanation": "Why Option 1 is correct..."
+      }
+    ]
+    No prefix text, no markdown. Just output raw JSON.`;
+
+    // Try Groq first for extreme speed
+    if (process.env.GROQ_API_KEY && process.env.GROQ_API_KEY.trim() !== "") {
+      try {
+        const messages = [{ role: "user", content: prompt }];
+        const resText = await callGroq(messages, "llama-3.3-70b-versatile");
+        if (resText) return cleanJSON(resText);
+      } catch (err) {
+        console.error("Groq generateQuiz error:", err.message);
+      }
+    }
+
     if (!genAI) {
       return getFallbackQuiz(topic);
     }
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
-      const prompt = `Create a multiple-choice quiz about "${topic}" consisting of exactly 5 questions.
-      For each question, provide 4 options, the 0-based index of the correct option, and a helpful explanation.
-      
-      Output MUST be a valid JSON array of objects matching this schema:
-      [
-        {
-          "questionText": "Question text here?",
-          "options": ["Option 0", "Option 1", "Option 2", "Option 3"],
-          "correctOptionIndex": 1,
-          "explanation": "Why Option 1 is correct..."
-        }
-      ]
-      No prefix text, no markdown. Just output raw JSON.`;
-
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const text = response.text();
